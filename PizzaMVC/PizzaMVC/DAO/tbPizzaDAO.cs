@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace PizzaMVC.DAO
 {
-    public class tbPizza 
+    public class tbPizzaDAO 
     {
         private SqlParameter[] EnviaParametros(tbPizzaViewModel tbpizza)
         {
@@ -63,6 +63,8 @@ namespace PizzaMVC.DAO
                 return RecebeParametros(tabela.Rows[0]);
         }
 
+        /*----------------------------------------*/
+
         public int IdAutomatico()
         {
             SqlParameter[] parametros = new SqlParameter[]
@@ -76,9 +78,30 @@ namespace PizzaMVC.DAO
 
         /*----------------------------------------*/
 
-        /*public void Inserir(tbPizzaViewModel tbpizza)
+        public void Inserir(tbPizzaViewModel p)
         {
-            HelperDAO.ExecutaProc("spInserir", tbpizza);
-        }*/
+            var parametros = new SqlParameter[]
+            {
+                new SqlParameter("descricao",p.descricao)
+            };
+
+            HelperDAO.ExecutaProc("spInserir", parametros);
+        }
+
+        public void Editar(tbPizzaViewModel p)
+        {
+            HelperDAO.ExecutaProc("spEditar", EnviaParametros(p));
+        }
+
+        public void Excluir(int id)
+        {
+            var parametros = new SqlParameter[]
+           {
+                new SqlParameter ("id",id),
+                new SqlParameter("tabela","tbPizza")
+           };
+
+            HelperDAO.ExecutaProc("spExcluir",parametros);
+        }
     }
 }

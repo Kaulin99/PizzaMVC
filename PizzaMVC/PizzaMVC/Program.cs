@@ -24,7 +24,7 @@ namespace PizzaMVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=tbPizza}/{action=Index}/{id?}");
 
             app.Run();
         }

@@ -1,0 +1,37 @@
+﻿@using PizzaMVC.Models;
+@model List<tbPizzaViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cardápio de pizza</h2>
+
+<a href="/tbPizza/criar">Novo Registro</a>
+
+<table class="table table-responsive">
+    <tr>
+        <th>Ações</th>
+        <th>Cógido da pizza</th>
+        <th>Pizza</th>
+        <th>Ingredientes</th>
+    </tr>
+    @foreach (var pizza in Model)
+    {
+        <tr>
+            <td>
+                <a href="/tbPizza/Editar?id=@pizza.id">Editar</a>
+                <a href="javascript:apagartbPizza(@pizza.id)">Apagar</a>
+            </td>
+            <td>@pizza.id</td>
+            <td>@pizza.descricao</td>
+            <td> <a href="/tbPizza/Editar?id=@pizza.id">Sabores</a></td>
+        </tr>
+    }
+</table>
+
+<script>
+    function apagartbPizza(id) {
+        if (confirm('Confirma a exclusão do registro? '))
+            location.href = 'tbPizza/Deletar?id=' + id;
+    }
+</script>
