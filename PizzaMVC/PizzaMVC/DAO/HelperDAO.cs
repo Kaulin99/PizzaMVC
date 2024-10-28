@@ -1,7 +1,8 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using PizzaMVC.DAO;
 
-namespace JogoMVC.DAO
+namespace PizzaMVC.DAO
 {
     public static class HelperDAO
 

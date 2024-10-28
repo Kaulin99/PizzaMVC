@@ -86,3 +86,26 @@ go
 					--Procedures específicas da tabela ingredientes--
 /*----------------------------------------------------------------------------------*/
 
+create or alter procedure spInserirIngredientes(
+	@descricao varchar(max))
+as
+begin
+	insert into tbIngredientesPizza(descricao)
+	values (@descricao)
+end
+
+go
+
+
+create or alter procedure spEditarIngredientes(
+	@Id int,
+	@descricao varchar(50),
+	@pizzaID int
+)
+as
+begin
+	UPDATE tbIngredientesPizza 
+	SET descricao = @descricao, pizzaId = @pizzaID
+	WHERE id = @Id;
+end
+go

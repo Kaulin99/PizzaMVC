@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlClient;
 
-namespace JogoMVC.DAO
+namespace PizzaMVC.DAO
 {
     public static class ConexaoBD
     {

@@ -4,13 +4,13 @@ using PizzaMVC.DAO;
 
 namespace PizzaMVC.Controllers
 {
-    public class tbPizzaController : Controller
+    public class tbIngredientesController : Controller
     {
         public IActionResult Index()
         {
             try
             {
-                tbPizzaDAO dao = new tbPizzaDAO();
+                tbIngredientesDAO dao = new tbIngredientesDAO();
                 var lista = dao.CriaLista();
                 return View("Index", lista);
             }
@@ -26,11 +26,11 @@ namespace PizzaMVC.Controllers
             {
                 ViewBag.Operacao = "C";
 
-                tbPizzaViewModel p = new tbPizzaViewModel();
-                tbPizzaDAO dao = new tbPizzaDAO();
-                p.id = dao.IdAutomatico();
+                tbIngredientesViewModel i = new tbIngredientesViewModel();
+                tbIngredientesDAO dao = new tbIngredientesDAO();
+                i.id = dao.IdAutomatico();
 
-                return View("Form", p);
+                return View("Form", i);
             }
             catch (Exception ex)
             {
@@ -44,13 +44,13 @@ namespace PizzaMVC.Controllers
             {
                 ViewBag.Operacao = "E";
 
-                tbPizzaDAO dao = new tbPizzaDAO();
-                tbPizzaViewModel p = dao.Consulta(id);
+                tbIngredientesDAO dao = new tbIngredientesDAO();
+                tbIngredientesViewModel i = dao.Consulta(id);
 
-                if (p == null)
+                if (i == null)
                     return RedirectToAction("Index");
                 else
-                    return View("Form", p);
+                    return View("Form", i);
             }
             catch (Exception ex)
             {
@@ -62,7 +62,7 @@ namespace PizzaMVC.Controllers
         {
             try
             {
-                tbPizzaDAO dao = new tbPizzaDAO();
+                tbIngredientesDAO dao = new tbIngredientesDAO();
                 dao.Excluir(id);
                 return View("Index");
             }
@@ -72,25 +72,25 @@ namespace PizzaMVC.Controllers
             }
         }
 
-        public IActionResult Salvar(tbPizzaViewModel p, string Operacao)
+        public IActionResult Salvar(tbIngredientesViewModel i, string Operacao)
         {
             try
             {
-                ValidaDados(p, Operacao);
+                ValidaDados(i, Operacao);
 
                 if (ModelState.IsValid == false)
                 {
                     ViewBag.Operacao = Operacao;
-                    return View("Form", p);
+                    return View("Form", i);
                 }
                 else
                 {
-                    tbPizzaDAO dao = new tbPizzaDAO();
+                    tbIngredientesDAO dao = new tbIngredientesDAO();
 
                     if (Operacao == "C")
-                        dao.Inserir(p);
-                    else 
-                        dao.Editar(p);
+                        dao.Inserir(i);
+                    else
+                        dao.Editar(i);
 
                     return RedirectToAction("Index");
                 }
@@ -101,13 +101,13 @@ namespace PizzaMVC.Controllers
             }
         }
 
-        private void ValidaDados(tbPizzaViewModel p, string Operacao)
+        private void ValidaDados(tbIngredientesViewModel i, string Operacao)
         {
             ModelState.Clear();
-            tbPizzaDAO dao = new tbPizzaDAO();
+            tbIngredientesDAO dao = new tbIngredientesDAO();
 
-            if (string.IsNullOrEmpty(p.descricao))
-                ModelState.AddModelError("descricao", "Preencha o nome da pizza");
+            if (string.IsNullOrEmpty(i.descricao))
+                ModelState.AddModelError("descricao", "Preencha o nome do ingrediente");
         }
     }
 }

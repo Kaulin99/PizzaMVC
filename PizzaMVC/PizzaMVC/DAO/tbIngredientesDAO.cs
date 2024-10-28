@@ -1,39 +1,45 @@
 ﻿using PizzaMVC.Models;
-using System.Data;
+using PizzaMVC.DAO;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace PizzaMVC.DAO
 {
-    public class tbPizzaDAO 
+    public class tbIngredientesDAO 
     {
-        private SqlParameter[] EnviaParametros(tbPizzaViewModel tbpizza)
+        private SqlParameter[] EnviaParametros(tbIngredientesViewModel ingredientes)
         {
             SqlParameter[] envia = new SqlParameter[]
             {
-                new SqlParameter("id",tbpizza.id),
-                new SqlParameter("descricao",tbpizza.descricao)
+                new SqlParameter("id",ingredientes.id),
+                new SqlParameter("descricao",ingredientes.descricao),
+                new SqlParameter("pizzaId",ingredientes.pizzaId)
             };
             return envia;
         }
 
-        private tbPizzaViewModel RecebeParametros(DataRow recebe)
+        private tbIngredientesViewModel RecebeParametros(DataRow recebe)
         {
-            tbPizzaViewModel p = new tbPizzaViewModel();
-            p.id = Convert.ToInt32(recebe["id"]);
-            p.descricao = Convert.ToString(recebe["descricao"]);
+            tbIngredientesViewModel i = new tbIngredientesViewModel();
+            i.id = Convert.ToInt32(recebe["id"]);
+            i.descricao = Convert.ToString(recebe["descricao"]);
 
-            return p;        
+            tbPizzaDAO dao = new tbPizzaDAO();
+            tbPizzaViewModel pizzaID = dao.Consulta(i.id);
+            i.pizzaId = Convert.ToInt32(pizzaID.id);
+
+            return i;
         }
 
         /*----------------------------------------*/
 
-        public List<tbPizzaViewModel> CriaLista()
+        public List<tbIngredientesViewModel> CriaLista()
         {
-            var lista = new List<tbPizzaViewModel>();
+            var lista = new List<tbIngredientesViewModel>();
 
             SqlParameter[] parametro = new SqlParameter[]
             {
-                new SqlParameter("tabela","tbPizza")
+                new SqlParameter("tabela","tbIngredientesPizza")
             };
 
             DataTable tabela = HelperDAO.ExecutaProcSelect("spListagem", parametro);
@@ -42,16 +48,16 @@ namespace PizzaMVC.DAO
             {
                 lista.Add(RecebeParametros(row));
             }
-            
+
             return lista;
         }
 
-        public tbPizzaViewModel Consulta(int id)
+        public tbIngredientesViewModel Consulta(int id)
         {
             SqlParameter[] parametro = new SqlParameter[]
                 {
                     new SqlParameter("id",id),
-                    new SqlParameter("tabela","tbPizza")
+                    new SqlParameter("tabela","tbIngredientesPizza")
                 };
 
             DataTable tabela = HelperDAO.ExecutaProcSelect("spConsulta", parametro);
@@ -68,7 +74,7 @@ namespace PizzaMVC.DAO
         {
             SqlParameter[] parametros = new SqlParameter[]
             {
-                new SqlParameter("tabela","tbPizza")
+                new SqlParameter("tabela","tbIngredientesPizza")
             };
 
             DataTable tabela = HelperDAO.ExecutaProcSelect("spIdAutomatico", parametros);
@@ -77,19 +83,19 @@ namespace PizzaMVC.DAO
 
         /*----------------------------------------*/
 
-        public void Inserir(tbPizzaViewModel p)
+        public void Inserir(tbIngredientesViewModel i)
         {
             var parametros = new SqlParameter[]
             {
-                new SqlParameter("descricao",p.descricao)
+                new SqlParameter("descricao",i.descricao)
             };
 
-            HelperDAO.ExecutaProc("spInserirPizza", parametros);
+            HelperDAO.ExecutaProc("spInserirIngredientes", parametros);
         }
 
-        public void Editar(tbPizzaViewModel p)
+        public void Editar(tbIngredientesViewModel i)
         {
-            HelperDAO.ExecutaProc("spEditarPizza", EnviaParametros(p));
+            HelperDAO.ExecutaProc("spEditarIngrediente", EnviaParametros(i));
         }
 
         public void Excluir(int id)
@@ -97,10 +103,11 @@ namespace PizzaMVC.DAO
             var parametros = new SqlParameter[]
            {
                 new SqlParameter ("id",id),
-                new SqlParameter("tabela","tbPizza")
+                new SqlParameter("tabela","tbIngredientesPizza")
            };
 
-            HelperDAO.ExecutaProc("spExcluir",parametros);
+            HelperDAO.ExecutaProc("spExcluir", parametros);
         }
+
     }
 }
