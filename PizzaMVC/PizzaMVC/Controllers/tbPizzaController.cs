@@ -24,13 +24,13 @@ namespace PizzaMVC.Controllers
         {
             try
             {
-                ViewBag.Operecao = "C";
+                ViewBag.Operacao = "C";
 
                 tbPizzaViewModel p = new tbPizzaViewModel();
                 tbPizzaDAO dao = new tbPizzaDAO();
                 p.id = dao.IdAutomatico();
 
-                return View("Index", p);
+                return View("Form", p);
             }
             catch (Exception ex)
             {

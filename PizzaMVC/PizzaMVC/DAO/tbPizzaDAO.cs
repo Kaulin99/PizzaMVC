@@ -21,7 +21,7 @@ namespace PizzaMVC.DAO
         {
             tbPizzaViewModel p = new tbPizzaViewModel();
             p.id = Convert.ToInt32(recebe["id"]);
-            p.descricao = Convert.ToString(recebe["desc"]);
+            p.descricao = Convert.ToString(recebe["descricao"]);
 
             return p;        
         }
@@ -85,12 +85,12 @@ namespace PizzaMVC.DAO
                 new SqlParameter("descricao",p.descricao)
             };
 
-            HelperDAO.ExecutaProc("spInserir", parametros);
+            HelperDAO.ExecutaProc("spInserirPizza", parametros);
         }
 
         public void Editar(tbPizzaViewModel p)
         {
-            HelperDAO.ExecutaProc("spEditar", EnviaParametros(p));
+            HelperDAO.ExecutaProc("spEditarPizza", EnviaParametros(p));
         }
 
         public void Excluir(int id)
