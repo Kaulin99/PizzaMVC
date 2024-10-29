@@ -100,7 +100,7 @@ namespace PizzaMVC.DAO
                 new SqlParameter("tabela","tbPizza")
            };
 
-            HelperDAO.ExecutaProc("spExcluir",parametros);
+            HelperDAO.ExecutaProc("spDeletar",parametros);
         }
     }
 }

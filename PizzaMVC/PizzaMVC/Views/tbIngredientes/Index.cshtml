@@ -1,0 +1,41 @@
+﻿@model List<tbIngredientesViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Listagem de Ingredientes da Pizza</h2>
+
+<a href="/tbIngredientes/Criar" class="btn btn-info">Novo Registro</a>
+<br />
+
+<table class="table table-responsive table-hover">
+    <tr>
+        <th>Ações</th>
+        <th>Código</th>
+        <th>Nome</th>
+    </tr>
+    @foreach (var ingrediente in Model)
+    {
+        <tr>
+            <td>
+                <a href="/tbIngredientes/Editar?id=@ingrediente.id" class="btn btn-info">Editar</a>
+                &nbsp;&nbsp;&nbsp;
+                <a href="javascript:confirma(@ingrediente.id)" class="btn btn-danger">Apagar</a>
+
+            </td>
+            <td>@ingrediente.id</td>
+            <td>@ingrediente.descricao</td>
+        </tr>
+    }
+</table>
+
+<script>
+    function confirma(id) 
+    {
+        if (confirm('Deseja mesmo apagar?')) 
+        {
+            location.href = '/ingredientesPizza/delete?id=' + id;
+        }
+    }
+</script>
+</table>

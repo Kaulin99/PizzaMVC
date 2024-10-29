@@ -1,0 +1,34 @@
+﻿@model tbIngredientesViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Cadastro Ingredientes da Pizza</h2>
+<form action="save" method="post" class="col-md-6">
+
+    <input type="hidden" value="@ViewBag.Operacao" name="Operacao" />
+
+    <label for="Id" class="control-label">Código do ingrediente da Pizza</label>
+
+    @if (ViewBag.Operacao == "I")
+    {
+        <input type="number" Name="id" value="@Model.id" class="form-control" />
+    }
+    else
+    {
+        <input type="number" Name="id" value="@Model.id" readonly class="form-control" />
+    }
+    <span asp-validation-for="id" class="text-danger"></span>
+
+    <label for="PizzaId" class="control-label">Código da Pizza</label>
+    <input type="number" Name="PizzaId" value="@Model.pizzaId" class="form-control" readonly />
+
+
+    <br />
+    <label for="descrição" class="control-label">Nome da ingrediente</label>
+    <input type="text" class="form-control" Name="descricao" value="@Model.descricao" />
+    <span asp-validation-for="descricao" class="text-danger"></span>
+    <br />
+
+    <input type="submit" class="btn btn-info" value="Salvar dados" />
+    <br />
+</form>

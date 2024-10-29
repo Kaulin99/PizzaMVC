@@ -32,6 +32,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/kauea/source/repos/PizzaMVC/PizzaMVC/PizzaMVC/Views/tbIngredientes/Form.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcdGJJbmdyZWRpZW50ZXNcRm9ybS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kauea/source/repos/PizzaMVC/PizzaMVC/PizzaMVC/Views/tbIngredientes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcdGJJbmdyZWRpZW50ZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/kauea/source/repos/PizzaMVC/PizzaMVC/PizzaMVC/Views/tbPizza/Form.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcdGJQaXp6YVxGb3JtLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

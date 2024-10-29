@@ -109,5 +109,20 @@ namespace PizzaMVC.Controllers
             if (string.IsNullOrEmpty(i.descricao))
                 ModelState.AddModelError("descricao", "Preencha o nome do ingrediente");
         }
+
+        public IActionResult ListaIngredientes(int pizzaId)
+        {
+            try
+            {
+                ViewBag.pizzaId = pizzaId; // necessário para que na inclusão seja o ingrediente seja associado à pizza 
+                tbIngredientesDAO dao =new tbIngredientesDAO();
+                var lista = dao.CriaLista(); ; // cast foi necessário para acessar método específico dessa classe, que não tem no padrao
+                return View("Index", lista);
+            }
+            catch (Exception erro)
+            {
+                return View("Error", new ErrorViewModel(erro.ToString()));
+            }
+        }
     }
 }
