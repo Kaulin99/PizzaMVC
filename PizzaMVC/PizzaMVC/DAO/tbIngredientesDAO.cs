@@ -27,6 +27,7 @@ namespace PizzaMVC.DAO
             tbPizzaDAO dao = new tbPizzaDAO();
             tbPizzaViewModel pizzaID = dao.Consulta(i.id);
             i.pizzaId = Convert.ToInt32(pizzaID.id);
+            i.NomePizza = Convert.ToString(pizzaID.descricao);
 
             return i;
         }
@@ -39,10 +40,11 @@ namespace PizzaMVC.DAO
 
             SqlParameter[] parametro = new SqlParameter[]
             {
-                new SqlParameter("tabela","tbIngredientesPizza")
+                new SqlParameter("tabela1","tbIngredientesPizza"),
+                new SqlParameter("tabela2","tbPizza")
             };
 
-            DataTable tabela = HelperDAO.ExecutaProcSelect("spListagem", parametro);
+            DataTable tabela = HelperDAO.ExecutaProcSelect("spListagemIngredientes", parametro);
 
             foreach (DataRow row in tabela.Rows)
             {

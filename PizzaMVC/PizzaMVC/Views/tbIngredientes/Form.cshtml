@@ -3,18 +3,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h2>Cadastro Ingredientes da Pizza</h2>
-<form action="save" method="post" class="col-md-6">
+<form action="Salvar" method="post" class="col-md-6">
 
     <input type="hidden" value="@ViewBag.Operacao" name="Operacao" />
 
-    <label for="Id" class="control-label">Código do ingrediente da Pizza</label>
-
-    @if (ViewBag.Operacao == "I")
+    @if (ViewBag.Operacao == "E")
     {
-        <input type="number" Name="id" value="@Model.id" class="form-control" />
-    }
-    else
-    {
+        <label for="Id" class="control-label">Código do ingrediente da Pizza</label>
         <input type="number" Name="id" value="@Model.id" readonly class="form-control" />
     }
     <span asp-validation-for="id" class="text-danger"></span>

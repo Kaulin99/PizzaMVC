@@ -30,6 +30,11 @@ namespace PizzaMVC.Controllers
                 tbIngredientesDAO dao = new tbIngredientesDAO();
                 i.id = dao.IdAutomatico();
 
+                tbPizzaDAO daoingredientes = new tbPizzaDAO();
+                tbPizzaViewModel pizzaID = daoingredientes.Consulta(i.id);
+                i.pizzaId = Convert.ToInt32(pizzaID.id);
+                i.NomePizza = Convert.ToString(pizzaID.descricao);
+
                 return View("Form", i);
             }
             catch (Exception ex)
@@ -123,6 +128,12 @@ namespace PizzaMVC.Controllers
             {
                 return View("Error", new ErrorViewModel(erro.ToString()));
             }
+        }
+
+        public IActionResult RedirecionaParaIndex(tbIngredientesViewModel model)
+        {
+            return RedirectToAction("ListaIngredientes",
+                routeValues: new { pizzaId = model.pizzaId });
         }
     }
 }

@@ -6,5 +6,6 @@
         public string descricao { get; set; }
         public int pizzaId { get; set; }
 
-            }
+        public string NomePizza {get; set; }
+    }
 }
