@@ -1,14 +1,31 @@
 # PizzaMVC
-Crie um CRUD para cadastrar pizzas. 
 
-Na listagem de pizzas exiba um novo ícone que irá permitir cadastrar os ingredientes da pizza na forma de registro em uma tabela. Sendo assim quando se clicar neste link para os ingredientes deve-se exibir uma listagem de todos os ingredientes já cadastrados para a pizza selecionada. Exiba "Ingredientes da pizza XXXXX" onde XXXX é o nome da pizza. Deve ter um botão para cadastrar um novo ingrediente e para cada ingrediente listado deve haver uma opção para editar e excluí-lo. Também deve haver nesta tela um botão para retornar à listagem de pizzas.
+Projeto ASP.NET MVC para Gerenciamento de Pizzas e Ingredientes.
 
-Tabelas:
+## Descrição
 
-create table tbPizza(id int not null primary key, descricao varchar(100) not null )
+PizzaMVC é uma aplicação web desenvolvida em ASP.NET MVC para gerenciar um cardápio de pizzas, permitindo a criação, edição, listagem e exclusão de pizzas e seus ingredientes. Este projeto serve como uma ferramenta de aprendizado para desenvolvimento de aplicativos web com ASP.NET, focando no uso de operações CRUD, views, controllers, DAO, procedures armazenadas e personalização de interface.
 
-create table tbIngredientesPizza (id int not null primary key,  pizzaId  int not null, descricao varchar(100) not null )
+## Funcionalidades
 
-Validação:  Todos os campos são obrigatórios.
+- **Gerenciamento de Pizzas**: CRUD completo para pizzas com associação de ingredientes.
+- **Cadastro de Ingredientes**: CRUD de ingredientes, associados a pizzas específicas.
+- **Validação de Dados**: Validações básicas para assegurar que dados essenciais estão presentes antes de salvar ou atualizar registros.
+- **Interface Responsiva**: Uso de CSS para uma apresentação visual simplificada e responsiva das páginas.
+- **Redirecionamento e Preservação de Parâmetros**: Preserva os IDs de pizzas e ingredientes ao navegar entre as telas, garantindo que os dados corretos sejam exibidos.
 
-Utilize Stored Procedures.
+## Estrutura do Projeto
+
+- **Models**: Classes que representam as entidades `tbPizzaViewModel` e `tbIngredientesViewModel`.
+- **Controllers**: Controladores `tbPizzaController` e `tbIngredientesController` para manipulação de dados.
+- **DAO (Data Access Object)**: Camadas de acesso a dados `tbPizzaDAO` e `tbIngredientesDAO`, usando procedures armazenadas para operações de banco de dados.
+- **Views**: Interfaces para criação, edição e listagem de pizzas e ingredientes, organizadas em HTML/CSS com Razor syntax.
+
+## Principais Arquivos
+
+- ## Controllers/tbPizzaController.cs: Lógica de controle para as ações relacionadas a pizzas.
+- ## Controllers/tbIngredientesController.cs: Lógica para ações relacionadas aos ingredientes.
+- ## DAO/tbPizzaDAO.cs: Métodos de acesso a dados para a entidade Pizza.
+- ## DAO/tbIngredientesDAO.cs: Métodos de acesso a dados para ingredientes.
+- ## Views/tbPizza/Index.cshtml: Página inicial de listagem de pizzas.
+- ## Views/tbIngredientes/Index.cshtml: Página de listagem de ingredientes para uma pizza específica.
