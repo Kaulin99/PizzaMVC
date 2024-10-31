@@ -11,7 +11,7 @@ create table tbIngredientesPizza
                               --Procedures genéricas--
 /*----------------------------------------------------------------------------------*/
 
-create or alter procedure spDeletar(
+create or alter procedure spExcluir(
 	@id int,
 	@tabela varchar(max)
 )
@@ -87,11 +87,12 @@ go
 /*----------------------------------------------------------------------------------*/
 
 create or alter procedure spInserirIngredientes(
-	@descricao varchar(max))
+	@descricao varchar(max),
+	@pizzaId int)
 as
 begin
-	insert into tbIngredientesPizza(descricao)
-	values (@descricao)
+	insert into tbIngredientesPizza(descricao,pizzaId)
+	values (@descricao,@pizzaId)
 end
 
 go
@@ -113,20 +114,16 @@ go
 CREATE OR ALTER PROCEDURE spListagemIngredientes(
     @tabela1 VARCHAR(MAX),
     @tabela2 VARCHAR(MAX),
-	@id int
+    @id INT
 )
 AS
 BEGIN
-    DECLARE @sql VARCHAR(MAX);
-    
-    SET @sql = 'SELECT * FROM ' + @tabela1 + ' t1 ' +
-               'LEFT JOIN ' + @tabela2 + ' t2 ON t1.id = t2.id' +
-			   'where pizzaId = ' + @id;
+    DECLARE @sql NVARCHAR(MAX);
 
-    EXEC(@sql);
+    SET @sql = 'SELECT t2.descricao,t2.id,t2.pizzaId,t1.descricao FROM ' + @tabela1 + ' t1 ' +
+               'LEFT JOIN ' + @tabela2 + ' t2 ON t1.id = t2.pizzaId ' +
+               'WHERE t1.id = @idParam';
+
+    EXEC sp_executesql @sql, N'@idParam INT', @idParam = @id;
 END
 GO
-
-SELECT * FROM tbPizza t1 
-               LEFT JOIN  tbIngredientesPizza t2 ON t1.id = t2.id
-			   where pizzaId =1;

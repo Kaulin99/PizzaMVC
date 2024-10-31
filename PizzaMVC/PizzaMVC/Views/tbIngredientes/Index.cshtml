@@ -5,7 +5,7 @@
 
 <h2>Listagem de Ingredientes da Pizza de @ViewBag.pizza</h2>
 
-<a href="/tbIngredientes/Criar?pizzaId=@ViewBag.pizzaId" class="btn btn-info">Novo Registro</a>
+<a href="/tbIngredientes/Criar?pizzaId=@ViewBag.pizzaId&pizza=@ViewBag.pizza" class="btn btn-info">Novo Registro</a>
 
 <table class="table table-responsive table-hover">
     <tr>
@@ -15,22 +15,30 @@
     </tr>
     @foreach (var ingrediente in Model)
     {
-        <tr>
-            <td>
-                <a href="/tbIngredientes/Editar?id=@ingrediente.id" class="btn btn-info">Editar</a>
+        if (ingrediente != null)
+        {
+            <tr>
+                <td>
+                <a href="/tbIngredientes/Editar?id=@ingrediente.id&pizzaId=@ViewBag.pizzaId" class="btn btn-info">Editar</a>
                 &nbsp;&nbsp;&nbsp;
-                <a href="javascript:Apagar(@ingrediente.id)" class="btn btn-danger">Apagar</a>
+                <a href="javascript:Apagar(@ViewBag.pizzaId, @ingrediente.id)" class="btn btn-danger">Apagar</a>
             </td>
             <td>@ingrediente.id</td>
             <td>@ingrediente.descricao</td>
         </tr>
+        }
     }
 </table>
 
+<a href="/tbPizza/Index" class="btn btn-primary">Voltar ao Cardápio de Pizzas</a>
+
+
 <script>
-    function Apagar(id) {
-        if (confirm('Deseja mesmo apagar?')) {
-            location.href = '/tbIngredientes/Excluir?id=' + id;
+    function Apagar(pizzaId,id) 
+    {
+        if (confirm('Deseja mesmo apagar?')) 
+        {
+            location.href = '/tbIngredientes/Excluir?pizzaId=' + pizzaId + '&id=' + id
         }
     }
 </script>

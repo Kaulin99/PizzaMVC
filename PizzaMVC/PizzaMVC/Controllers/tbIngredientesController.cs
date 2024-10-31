@@ -12,10 +12,16 @@ namespace PizzaMVC.Controllers
             {
                 tbIngredientesDAO dao = new tbIngredientesDAO();
                 var lista = dao.CriaLista(pizzaId);
-                tbPizzaDAO daopizza = new tbPizzaDAO();
 
-                ViewBag.pizzaId = pizzaId; // Passa o ID da pizza para a view
-                ViewBag.pizza = daopizza.ConsultaPizzaDescricao(pizzaId); // Passa o nome da pizza, assumindo que você tenha um método para buscar a descrição pelo ID
+                // Recupera a descrição da pizza e define o ID e nome na ViewBag
+                tbPizzaDAO daopizza = new tbPizzaDAO();
+                tbPizzaViewModel pizza = daopizza.Consulta(pizzaId);
+
+                if (pizza != null)
+                {
+                    ViewBag.pizzaId = pizzaId;
+                    ViewBag.pizza = pizza.descricao;  // Define a descrição na ViewBag
+                }
 
                 return View("Index", lista);
             }
@@ -24,6 +30,7 @@ namespace PizzaMVC.Controllers
                 return View("Error", new ErrorViewModel(ex.ToString()));
             }
         }
+
 
         public IActionResult Criar(int pizzaId)
         {
@@ -39,14 +46,9 @@ namespace PizzaMVC.Controllers
                 tbPizzaViewModel pizza = daopizza.Consulta(pizzaId);
                 i.pizzaId = Convert.ToInt32(pizza.id);
                 i.NomePizza = Convert.ToString(pizza.descricao);
+                i.pizzaId = pizza.id;
+                ViewBag.pizza = pizza.descricao;  // Define a descrição na ViewBag
 
-                if (pizza != null)
-                {
-                    i.pizzaId = pizza.id;
-                    ViewBag.pizza = pizza.descricao;  // Define a descrição na ViewBag
-                }
-
-                i.pizzaId = pizzaId;
                 i.NomePizza = pizza?.descricao;
 
                 return View("Form", i);
@@ -57,7 +59,7 @@ namespace PizzaMVC.Controllers
             }
         }
 
-        public IActionResult Editar(int id)
+        public IActionResult Editar(int id, int pizzaId)
         {
             try
             {
@@ -65,6 +67,8 @@ namespace PizzaMVC.Controllers
 
                 tbIngredientesDAO dao = new tbIngredientesDAO();
                 tbIngredientesViewModel i = dao.Consulta(id);
+                i.pizzaId = pizzaId;
+                ViewBag.pizza = i.NomePizza;
 
                 if (i == null)
                     return RedirectToAction("Index");
@@ -77,13 +81,13 @@ namespace PizzaMVC.Controllers
             }
         }
 
-        public IActionResult Excluir(int pizzaId)
+        public IActionResult Excluir(int id,int pizzaId)
         {
             try
             {
                 tbIngredientesDAO dao = new tbIngredientesDAO();
-                dao.Excluir(pizzaId);
-                return RedirectToAction("Index",pizzaId);
+                dao.Excluir(id);
+                return RedirectToAction("Index", new { pizzaId = pizzaId });
             }
             catch (Exception ex)
             {
@@ -91,7 +95,7 @@ namespace PizzaMVC.Controllers
             }
         }
 
-        public IActionResult Salvar(tbIngredientesViewModel i, string Operacao)
+        public IActionResult Salvar(tbIngredientesViewModel i, string Operacao, string pizza)
         {
             try
             {
@@ -105,14 +109,14 @@ namespace PizzaMVC.Controllers
                 else
                 {
                     tbIngredientesDAO dao = new tbIngredientesDAO();
-                    tbPizzaViewModel pizza = new tbPizzaViewModel();
 
                     if (Operacao == "C")
                         dao.Inserir(i);
                     else
                         dao.Editar(i);
 
-                    return RedirecionaParaIndex(i);
+                    // Passa o pizzaId ao redirecionar para Index
+                    return ListaIngredientes(i.pizzaId, pizza);
                 }
             }
             catch (Exception ex)
@@ -120,6 +124,7 @@ namespace PizzaMVC.Controllers
                 return View("Error", new ErrorViewModel(ex.ToString()));
             }
         }
+
 
         private void ValidaDados(tbIngredientesViewModel i, string Operacao)
         {

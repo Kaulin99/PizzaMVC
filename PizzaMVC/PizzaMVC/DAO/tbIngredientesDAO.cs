@@ -1,5 +1,4 @@
 ﻿using PizzaMVC.Models;
-using PizzaMVC.DAO;
 using System.Data.SqlClient;
 using System.Data;
 
@@ -21,15 +20,21 @@ namespace PizzaMVC.DAO
         private tbIngredientesViewModel RecebeParametros(DataRow recebe)
         {
             tbIngredientesViewModel i = new tbIngredientesViewModel();
-            i.id = Convert.ToInt32(recebe["id"]);
+            if (recebe["id"] != DBNull.Value)
+                i.id = Convert.ToInt32(recebe["id"]);
             i.descricao = Convert.ToString(recebe["descricao"]);
 
             tbPizzaDAO dao = new tbPizzaDAO();
-            tbPizzaViewModel pizzaID = dao.Consulta(i.id);
-            i.pizzaId = Convert.ToInt32(pizzaID.id);
+            tbPizzaViewModel pizzaID = new tbPizzaViewModel();
+
+            if (recebe["pizzaId"]!=DBNull.Value) 
+                pizzaID = dao.Consulta(Convert.ToInt32(recebe["pizzaId"]));
             i.NomePizza = Convert.ToString(pizzaID.descricao);
 
-            return i;
+            if (recebe["id"] == DBNull.Value)
+                return null;
+            else
+                return i;
         }
 
         /*----------------------------------------*/
@@ -99,14 +104,14 @@ namespace PizzaMVC.DAO
 
         public void Editar(tbIngredientesViewModel i)
         {
-            HelperDAO.ExecutaProc("spEditarIngrediente", EnviaParametros(i));
+            HelperDAO.ExecutaProc("spEditarIngredientes", EnviaParametros(i));
         }
 
-        public void Excluir(int id)
+        public void Excluir(int pizzaId)
         {
             var parametros = new SqlParameter[]
            {
-                new SqlParameter ("id",id),
+                new SqlParameter ("id",pizzaId),
                 new SqlParameter("tabela","tbIngredientesPizza")
            };
 

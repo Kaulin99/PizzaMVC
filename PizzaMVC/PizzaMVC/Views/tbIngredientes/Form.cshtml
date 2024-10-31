@@ -2,10 +2,11 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Cadastro Ingredientes da Pizza</h2>
+<h2>Cadastro Ingredientes da Pizza de @ViewBag.pizza</h2>
 <form action="Salvar" method="post" class="col-md-6">
 
     <input type="hidden" value="@ViewBag.Operacao" name="Operacao" />
+    <input type="hidden" value="@ViewBag.pizza" name="pizza" />
 
     @if (ViewBag.Operacao == "E")
     {
@@ -14,8 +15,8 @@
     }
     <span asp-validation-for="id" class="text-danger"></span>
 
-    <label for="PizzaId" class="control-label">Código da Pizza</label>
-    <input type="number" Name="PizzaId" value="@Model.id" class="form-control" readonly />
+    <label for="PizzaId" class="control-label">Código da pizza</label>
+    <input type="number" Name="PizzaId" value="@Model.pizzaId" class="form-control" readonly />
 
 
     <br />

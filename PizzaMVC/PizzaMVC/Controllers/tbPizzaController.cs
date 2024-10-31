@@ -64,7 +64,7 @@ namespace PizzaMVC.Controllers
             {
                 tbPizzaDAO dao = new tbPizzaDAO();
                 dao.Excluir(id);
-                return View("Index");
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {

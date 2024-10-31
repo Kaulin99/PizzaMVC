@@ -6,7 +6,7 @@
 
 <h2>Cardápio de pizza</h2>
 
-<a href="/tbPizza/criar">Novo Registro</a>
+<a href="/tbPizza/criar" class="btn btn-info">Novo Registro</a>
 
 <table class="table table-responsive">
     <tr>
@@ -19,8 +19,8 @@
     {
         <tr>
             <td>
-                <a href="/tbPizza/Editar?id=@pizza.id">Editar</a>
-                <a href="javascript:apagartbPizza(@pizza.id)">Apagar</a>
+                <a href="/tbPizza/Editar?id=@pizza.id" class="btn btn-info">Editar</a>
+            <a href="javascript:apagartbPizza(@pizza.id)" class="btn btn-danger">Apagar</a>
             </td>
             <td>@pizza.id</td>
             <td>@pizza.descricao</td>
