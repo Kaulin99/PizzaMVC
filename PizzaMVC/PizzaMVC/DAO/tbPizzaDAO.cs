@@ -75,6 +75,22 @@ namespace PizzaMVC.DAO
             return Convert.ToInt16(tabela.Rows[0]["MAIOR"]);
         }
 
+        public string ConsultaPizzaDescricao(int pizzaId)
+        {
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("id", pizzaId)
+            };
+
+            DataTable tabela = HelperDAO.ExecutaProcSelect("spConsultaPizzaDescricao", parametros);
+
+            if (tabela.Rows.Count == 0)
+                return null;
+            else
+                return tabela.Rows[0]["descricao"].ToString();
+        }
+
+
         /*----------------------------------------*/
 
         public void Inserir(tbPizzaViewModel p)

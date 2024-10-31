@@ -34,14 +34,15 @@ namespace PizzaMVC.DAO
 
         /*----------------------------------------*/
 
-        public List<tbIngredientesViewModel> CriaLista()
+        public List<tbIngredientesViewModel> CriaLista(int id)
         {
             var lista = new List<tbIngredientesViewModel>();
 
             SqlParameter[] parametro = new SqlParameter[]
             {
-                new SqlParameter("tabela1","tbIngredientesPizza"),
-                new SqlParameter("tabela2","tbPizza")
+                new SqlParameter("tabela1","tbPizza"),
+                new SqlParameter("tabela2","tbIngredientesPizza"),
+                new SqlParameter("id",id)
             };
 
             DataTable tabela = HelperDAO.ExecutaProcSelect("spListagemIngredientes", parametro);
@@ -87,9 +88,10 @@ namespace PizzaMVC.DAO
 
         public void Inserir(tbIngredientesViewModel i)
         {
-            var parametros = new SqlParameter[]
+            SqlParameter[] parametros = new SqlParameter[]
             {
-                new SqlParameter("descricao",i.descricao)
+                new SqlParameter("descricao",i.descricao),
+                new SqlParameter("pizzaId",i.pizzaId)
             };
 
             HelperDAO.ExecutaProc("spInserirIngredientes", parametros);

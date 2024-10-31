@@ -6,12 +6,17 @@ namespace PizzaMVC.Controllers
 {
     public class tbIngredientesController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(int pizzaId)
         {
             try
             {
                 tbIngredientesDAO dao = new tbIngredientesDAO();
-                var lista = dao.CriaLista();
+                var lista = dao.CriaLista(pizzaId);
+                tbPizzaDAO daopizza = new tbPizzaDAO();
+
+                ViewBag.pizzaId = pizzaId; // Passa o ID da pizza para a view
+                ViewBag.pizza = daopizza.ConsultaPizzaDescricao(pizzaId); // Passa o nome da pizza, assumindo que você tenha um método para buscar a descrição pelo ID
+
                 return View("Index", lista);
             }
             catch (Exception ex)
@@ -20,7 +25,7 @@ namespace PizzaMVC.Controllers
             }
         }
 
-        public IActionResult Criar()
+        public IActionResult Criar(int pizzaId)
         {
             try
             {
@@ -30,10 +35,19 @@ namespace PizzaMVC.Controllers
                 tbIngredientesDAO dao = new tbIngredientesDAO();
                 i.id = dao.IdAutomatico();
 
-                tbPizzaDAO daoingredientes = new tbPizzaDAO();
-                tbPizzaViewModel pizzaID = daoingredientes.Consulta(i.id);
-                i.pizzaId = Convert.ToInt32(pizzaID.id);
-                i.NomePizza = Convert.ToString(pizzaID.descricao);
+                tbPizzaDAO daopizza = new tbPizzaDAO();
+                tbPizzaViewModel pizza = daopizza.Consulta(pizzaId);
+                i.pizzaId = Convert.ToInt32(pizza.id);
+                i.NomePizza = Convert.ToString(pizza.descricao);
+
+                if (pizza != null)
+                {
+                    i.pizzaId = pizza.id;
+                    ViewBag.pizza = pizza.descricao;  // Define a descrição na ViewBag
+                }
+
+                i.pizzaId = pizzaId;
+                i.NomePizza = pizza?.descricao;
 
                 return View("Form", i);
             }
@@ -63,13 +77,13 @@ namespace PizzaMVC.Controllers
             }
         }
 
-        public IActionResult Excluir(int id)
+        public IActionResult Excluir(int pizzaId)
         {
             try
             {
                 tbIngredientesDAO dao = new tbIngredientesDAO();
-                dao.Excluir(id);
-                return View("Index");
+                dao.Excluir(pizzaId);
+                return RedirectToAction("Index",pizzaId);
             }
             catch (Exception ex)
             {
@@ -91,13 +105,14 @@ namespace PizzaMVC.Controllers
                 else
                 {
                     tbIngredientesDAO dao = new tbIngredientesDAO();
+                    tbPizzaViewModel pizza = new tbPizzaViewModel();
 
                     if (Operacao == "C")
                         dao.Inserir(i);
                     else
                         dao.Editar(i);
 
-                    return RedirectToAction("Index");
+                    return RedirecionaParaIndex(i);
                 }
             }
             catch (Exception ex)
@@ -115,13 +130,14 @@ namespace PizzaMVC.Controllers
                 ModelState.AddModelError("descricao", "Preencha o nome do ingrediente");
         }
 
-        public IActionResult ListaIngredientes(int pizzaId)
+        public IActionResult ListaIngredientes(int pizzaId,string pizza)
         {
             try
             {
                 ViewBag.pizzaId = pizzaId; // necessário para que na inclusão seja o ingrediente seja associado à pizza 
+                ViewBag.pizza = pizza;
                 tbIngredientesDAO dao =new tbIngredientesDAO();
-                var lista = dao.CriaLista(); ; // cast foi necessário para acessar método específico dessa classe, que não tem no padrao
+                var lista = dao.CriaLista(pizzaId); // cast foi necessário para acessar método específico dessa classe, que não tem no padrao
                 return View("Index", lista);
             }
             catch (Exception erro)

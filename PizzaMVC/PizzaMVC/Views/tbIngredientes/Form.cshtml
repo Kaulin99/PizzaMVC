@@ -15,11 +15,11 @@
     <span asp-validation-for="id" class="text-danger"></span>
 
     <label for="PizzaId" class="control-label">Código da Pizza</label>
-    <input type="number" Name="PizzaId" value="@Model.pizzaId" class="form-control" readonly />
+    <input type="number" Name="PizzaId" value="@Model.id" class="form-control" readonly />
 
 
     <br />
-    <label for="descrição" class="control-label">Nome da ingrediente</label>
+    <label for="descrição" class="control-label">Nome do ingrediente</label>
     <input type="text" class="form-control" Name="descricao" value="@Model.descricao" />
     <span asp-validation-for="descricao" class="text-danger"></span>
     <br />

@@ -109,3 +109,24 @@ begin
 	WHERE id = @Id;
 end
 go
+
+CREATE OR ALTER PROCEDURE spListagemIngredientes(
+    @tabela1 VARCHAR(MAX),
+    @tabela2 VARCHAR(MAX),
+	@id int
+)
+AS
+BEGIN
+    DECLARE @sql VARCHAR(MAX);
+    
+    SET @sql = 'SELECT * FROM ' + @tabela1 + ' t1 ' +
+               'LEFT JOIN ' + @tabela2 + ' t2 ON t1.id = t2.id' +
+			   'where pizzaId = ' + @id;
+
+    EXEC(@sql);
+END
+GO
+
+SELECT * FROM tbPizza t1 
+               LEFT JOIN  tbIngredientesPizza t2 ON t1.id = t2.id
+			   where pizzaId =1;

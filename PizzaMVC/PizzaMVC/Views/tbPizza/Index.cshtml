@@ -24,7 +24,7 @@
             </td>
             <td>@pizza.id</td>
             <td>@pizza.descricao</td>
-            <td> <a href="/tbIngredientes/ListaIngredientes?pizzaId=@pizza.id">Sabores</a></td>
+            <td> <a href="/tbIngredientes/ListaIngredientes?pizzaId=@pizza.id&pizza=@pizza.descricao">Sabores</a></td>
         </tr>
     }
 </table>
@@ -32,6 +32,6 @@
 <script>
     function apagartbPizza(id) {
         if (confirm('Confirma a exclusão do registro? '))
-            location.href = 'tbPizza/Deletar?id=' + id;
+            location.href = 'tbPizza/Excluir?id=' + id;
     }
 </script>
