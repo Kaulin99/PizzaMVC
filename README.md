@@ -23,9 +23,9 @@ PizzaMVC é uma aplicação web desenvolvida em ASP.NET MVC para gerenciar um ca
 
 ## Principais Arquivos
 
-- ## Controllers/tbPizzaController.cs: Lógica de controle para as ações relacionadas a pizzas.
-- ## Controllers/tbIngredientesController.cs: Lógica para ações relacionadas aos ingredientes.
-- ## DAO/tbPizzaDAO.cs: Métodos de acesso a dados para a entidade Pizza.
-- ## DAO/tbIngredientesDAO.cs: Métodos de acesso a dados para ingredientes.
-- ## Views/tbPizza/Index.cshtml: Página inicial de listagem de pizzas.
-- ## Views/tbIngredientes/Index.cshtml: Página de listagem de ingredientes para uma pizza específica.
+- **Controllers/tbPizzaController.cs**: Lógica de controle para as ações relacionadas a pizzas.
+- **Controllers/tbIngredientesController.cs**: Lógica para ações relacionadas aos ingredientes.
+- **DAO/tbPizzaDAO.cs**: Métodos de acesso a dados para a entidade Pizza.
+- **DAO/tbIngredientesDAO.cs**: Métodos de acesso a dados para ingredientes.
+- **Views/tbPizza/Index.cshtml**: Página inicial de listagem de pizzas.
+- **Views/tbIngredientes/Index.cshtml**: Página de listagem de ingredientes para uma pizza específica.
