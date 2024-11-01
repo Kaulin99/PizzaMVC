@@ -5,10 +5,10 @@ create table tbPizza
 (id int not null primary key identity, descricao varchar(100) not null )
 
 create table tbIngredientesPizza 
-(id int not null primary key, pizzaId int not null, descricao varchar(100) not null )
+(id int not null primary key identity, pizzaId int not null, descricao varchar(100) not null )
 
 /*----------------------------------------------------------------------------------*/
-                              --Procedures genéricas--
+                              --Procedures genÃ©ricas--
 /*----------------------------------------------------------------------------------*/
 
 create or alter procedure spExcluir(
@@ -57,7 +57,7 @@ go
 
 
 /*----------------------------------------------------------------------------------*/
-					 --Procedures específicas da tabela pizza--
+					 --Procedures especÃ­ficas da tabela pizza--
 /*----------------------------------------------------------------------------------*/
 
 create or alter procedure spInserirPizza(
@@ -83,7 +83,7 @@ end
 go
 
 /*----------------------------------------------------------------------------------*/
-					--Procedures específicas da tabela ingredientes--
+					--Procedures especÃ­ficas da tabela ingredientes--
 /*----------------------------------------------------------------------------------*/
 
 create or alter procedure spInserirIngredientes(
